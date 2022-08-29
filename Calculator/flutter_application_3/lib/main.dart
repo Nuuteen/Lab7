@@ -1,40 +1,22 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_calculator_app/calculator.dart';
 
 void main() {
-  runApp(const MyCal());
+  runApp(const MyApp());
 }
 
-class MyCal extends StatefulWidget {
-  const MyCal({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  @override
-  State<MyCal> createState() => MyCalState();
-}
-
-class MyCalState extends State<MyCal> {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Calculator"),
-        ),
-        body: Column(
-          children: [
-            Row(
-              children: [
-                OutlinedButton(
-                  onPressed: () {},
-                  child: Text("XXX"),
-                ),
-              ],
-            )
-          ],
-        ),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: const Calculator(),
     );
   }
 }
