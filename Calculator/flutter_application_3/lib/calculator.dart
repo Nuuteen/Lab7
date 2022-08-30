@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 class Calculator extends StatefulWidget {
   const Calculator({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class _CalculatorState extends State<Calculator> {
   Widget numButton(String btnText, Color btnColor, Color txtColor) {
     return ElevatedButton(
       onPressed: () {
-        calculate(btnText);
+        btnpressed(btnText);
       },
       child: Text(
         btnText,
@@ -49,7 +50,7 @@ class _CalculatorState extends State<Calculator> {
                 Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Text(
-                    text,
+                    result,
                     textAlign: TextAlign.left,
                     style: TextStyle(color: Colors.white, fontSize: 80),
                   ),
@@ -99,24 +100,16 @@ class _CalculatorState extends State<Calculator> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(28, 12, 90, 12),
-                    child: Text(
-                      "0",
-                      style: TextStyle(
-                        fontSize: 35,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    shape: StadiumBorder(),
-                    primary: (Colors.grey[850])!,
-                  ),
+                numButton(
+                  "0",
+                  (Colors.grey[850])!,
+                  Colors.white,
                 ),
-                numButton(".", (Colors.grey[850])!, Colors.white),
+                numButton(
+                  ".",
+                  (Colors.grey[850])!,
+                  Colors.white,
+                ),
                 numButton("=", Colors.orange, Colors.white),
               ],
             ),
@@ -127,45 +120,78 @@ class _CalculatorState extends State<Calculator> {
     );
   }
 
-  // Logic
-  int firstNumber = 0;
-  int secondNumber = 0;
-  String result = "";
-  String text = "";
-  String operation = "";
-
-  void calculate(String btnText) {
-    if (btnText == "C") {
-      result = "";
-      text = "";
-      firstNumber = 0;
-      secondNumber = 0;
-    } else if (btnText == "+" ||
-        btnText == "-" ||
-        btnText == "x" ||
-        btnText == "/") {
-      firstNumber = int.parse(text);
-      result = "";
-      operation = btnText;
-    } else if (btnText == "=") {
-      secondNumber = int.parse(text);
-      if (operation == "+") {
-        result = (firstNumber + secondNumber).toString();
-      }
-      if (operation == "-") {
-        result = (firstNumber - secondNumber).toString();
-      }
-      if (operation == "x") {
-        result = (firstNumber * secondNumber).toString();
-      }
-      if (operation == "/") {
-        result = (firstNumber ~/ secondNumber).toString();
-      }
-    } else {
-      result = int.parse(text + btnText).toString();
-    }
+  btnpressed(String text) {
+    print(text);
     setState(() {
-      text = result;
+      if (text == "C") {
+        result = "0";
+      } else if (text == ".") {
+        if (result.contains(".")) {
+          return;
+        } else {
+          result = result + text;
+        }
+      } else if (text == "=") {
+        expression = result.replaceAll("x", "*");
+
+        Parser p = Parser();
+        Expression exp = p.parse(expression);
+
+        ContextModel cm = ContextModel();
+        dynamic calculate = exp.evaluate(EvaluationType.REAL, cm);
+
+        result = "$calculate";
+      } else {
+        if (result == "0") {
+          result = text;
+        } else {
+          result = result + text;
+        }
+      }
     });
   }
+
+  String result = "0";
+  String expression = "";
+  // Logic
+//   int firstNumber = 0;
+//   int secondNumber = 0;
+//   String result = "";
+
+//   String operation = "";
+
+//   void calculate(String btnText) {
+//     if (btnText == "C") {
+//       result = "";
+//       text = "";
+//       firstNumber = 0;
+//       secondNumber = 0;
+//     } else if (btnText == "+" ||
+//         btnText == "-" ||
+//         btnText == "x" ||
+//         btnText == "/") {
+//       firstNumber = int.parse(text);
+//       result = "";
+//       operation = btnText;
+//     } else if (btnText == "=") {
+//       secondNumber = int.parse(text);
+//       if (operation == "+") {
+//         result = (firstNumber + secondNumber).toString();
+//       }
+//       if (operation == "-") {
+//         result = (firstNumber - secondNumber).toString();
+//       }
+//       if (operation == "x") {
+//         result = (firstNumber * secondNumber).toString();
+//       }
+//       if (operation == "/") {
+//         result = (firstNumber ~/ secondNumber).toString();
+//       }
+//     } else {
+//       result = int.parse(text + btnText).toString();
+//     }
+//     setState(() {
+//       text = result;
+//     });
+//   }
 }
