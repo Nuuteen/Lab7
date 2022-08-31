@@ -37,7 +37,7 @@ class _CalculatorState extends State<Calculator> {
       backgroundColor: Colors.pinkAccent,
       appBar: AppBar(
         title: Text("Calculator"),
-        backgroundColor: Colors.pinkAccent,
+        backgroundColor: Colors.black,
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5),
@@ -153,4 +153,45 @@ class _CalculatorState extends State<Calculator> {
 
   String result = "0";
   String expression = "";
+  // Logic
+//   int firstNumber = 0;
+//   int secondNumber = 0;
+//   String result = "";
+
+//   String operation = "";
+
+//   void calculate(String btnText) {
+//     if (btnText == "C") {
+//       result = "";
+//       text = "";
+//       firstNumber = 0;
+//       secondNumber = 0;
+//     } else if (btnText == "+" ||
+//         btnText == "-" ||
+//         btnText == "x" ||
+//         btnText == "/") {
+//       firstNumber = int.parse(text);
+//       result = "";
+//       operation = btnText;
+//     } else if (btnText == "=") {
+//       secondNumber = int.parse(text);
+//       if (operation == "+") {
+//         result = (firstNumber + secondNumber).toString();
+//       }
+//       if (operation == "-") {
+//         result = (firstNumber - secondNumber).toString();
+//       }
+//       if (operation == "x") {
+//         result = (firstNumber * secondNumber).toString();
+//       }
+//       if (operation == "/") {
+//         result = (firstNumber ~/ secondNumber).toString();
+//       }
+//     } else {
+//       result = int.parse(text + btnText).toString();
+//     }
+//     setState(() {
+//       text = result;
+//     });
+//   }
 }
